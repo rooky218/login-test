@@ -4,6 +4,10 @@
   //to log in or create account. The purpose of this page is do demonstate knowledge
   //of HTML, CSS, JavaScript, PHP, and MySQL to the degree of creating a login
   // system that will also validate form data.
+
+  //login leads to page-1.php
+  //signup leads to page-2.php
+
   session_start();
 ?>
 
@@ -100,24 +104,30 @@
           <div class="formbox">
           <form method="post" action="page-2.php" name="signup-frm"
             onsubmit="return notYet()">
+            <!-- this form needs username, Fname, Lname, password, email, phone -->
 
-              <input type="text" id="name" class="frm2" name="name"
-                placeholder="John Lewis">
-                <br/><h6 id="name-error" class="error-m">Please enter first and last name</h6>
-                <h6 id="name-missing" class="error-m">Oops, you forgot something...</h6><br/>
+              <input type="text" id="fname" class="frm2" name="fname"
+                placeholder="First Name">
+                <br/><h6 id="fname-error" class="error-m">Please enter first name</h6>
+                <h6 id="fname-missing" class="error-m">Oops, you forgot something...</h6><br/>
+
+              <input type="text" id="lname" class="frm2" name="lname"
+                placeholder="Last Name">
+                <br/><h6 id="lname-error" class="error-m">Please enter your last name</h6>
+                <h6 id="lname-missing" class="error-m">Oops, you forgot something...</h6><br/>
 
               <input type="text" id="email" class="frm2" name="email"
-                placeholder="john@gmail.com">
+                placeholder="Email">
                 <br/><h6 id="email-error" class="error-m">Please enter a valid email</h6>
                 <h6 id="email-missing" class="error-m">Oops, you forgot something...</h6><br/>
 
-              <input type="password" id="password" class="frm2" name="password"
-                placeholder="Enter Password">
+              <input type="password" id="password1" class="frm2" name="password1"
+                placeholder="Password">
                 <br/><h6 id="password1-nomatch" class="error-m">Your passwords don't match</h6>
                 <h6 id="password1-missing" class="error-m">Oops, you forgot something...</h6><br/>
 
               <input type="password" id="password2" class="frm2" name="password2"
-                placeholder="Re-Enter Password">
+                placeholder="Verify Password">
                 <br/><h6 id="password2-nomatch" class="error-m">Your passwords don't match</h6>
                 <h6 id="password2-missing" class="error-m">Oops, you forgot something...</h6><br/>
 
@@ -140,14 +150,16 @@
 //used for signup form
   function notYet() {
     var xin = [
-            document.forms['signup-frm']['name'].value,
+            document.forms['signup-frm']['fname'].value,
+            document.forms['signup-frm']['lname'].value,
             document.forms['signup-frm']['email'].value,
-            document.forms['signup-frm']['password'].value,
+            document.forms['signup-frm']['password1'].value,
             document.forms['signup-frm']['password2'].value
     ];
 
     var zin = [
-      "name-missing",
+      "fname-missing",
+      "lname-missing",
       "email-missing",
       "password1-missing",
       "password2-missing"
@@ -155,12 +167,12 @@
 
     //reset all values on resubmit
     var counter = 0;
-    for(var i = 0; i < 4; i++){
+    for(var i = 0; i < 5; i++){
       document.getElementById(zin[i]).style.display = "none";
     }//end for
 
     //set alerts for null values
-    for(var i = 0; i < 4; i++){
+    for(var i = 0; i < 5; i++){
       if(xin[i] == ""){
         document.getElementById(zin[i]).style.display = "block";
         counter++;
@@ -199,7 +211,7 @@
 
 
   //set default display
-  document.getElementById("s1-2").style.display = "none";
+  document.getElementById("s1-1").style.display = "none"; //change back to s1-2 when finished
 
   //switch display from login to sign up on button click
   document.getElementById("sign-up").onclick = funcSwitch;
