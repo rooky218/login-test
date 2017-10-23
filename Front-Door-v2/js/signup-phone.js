@@ -8,4 +8,4 @@
   || document.body.clientHeight;
 
   var middle = (h - 650)/2; //400 is height of login panel, divided by top and bottom
-  document.getElementById("conf-p").style.marginTop = middle + "px";
+  document.getElementById("conf-code").style.marginTop = middle + "px";

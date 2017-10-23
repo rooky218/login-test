@@ -8,7 +8,7 @@
     <title><?php echo $title;?></title>
 
       <!-- Custom stylesheets -->
-      <link rel="stylesheet" href="css/main_v2.css">
+      <link rel="stylesheet" href="../css/main_v2.css">
 
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

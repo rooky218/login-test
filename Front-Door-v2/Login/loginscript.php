@@ -5,7 +5,8 @@
 		require("../includes/functions.php");
 
 	//connect to DB
-		require("../DB/dblogin.php");
+		//include("../DB/dblogin.php");
+    include("../DB/dblogin2.php");
 
   //Build Query
   $q = "SELECT admin, email, FName, LName, password, phone, username FROM Users
@@ -34,8 +35,12 @@
 								$_SESSION["Phone"] = $row["phone"];
 
                 $_SESSION["Alert_Logged_In_Success"] = true;
-								header("location: ./../index.php");//if login successful send here
-
+                if(myisset($_SESSION["return_to"])){
+								  header("location: ./../" . $_SESSION["return_to"]);//if login successful send here
+                  unset($_SESSION["return_to"]);
+                } else {
+                  header("location: ./../index.php");
+                }
 							} else {	//login not correct, set session data for return error messaging
 
 								//this part re-enters what user had in the login fields, with an error message

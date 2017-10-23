@@ -9,8 +9,74 @@
 
   $title = "Sign Up"; //set page title
   require("../includes/header_no_nav.php");
-  //require("includes/header_logged_out.php"); //load page header
-  //require("includes/header_logged_in.php"); //load page header
+  require("../includes/functions.php");
+
+  //check for post value, display content appropriatly
+  if(myisset($_POST["phone"])){ //if phone has been submitted, send text
+    $phone = $_POST["phone"];
+    echo "Phone has been set <br />";
+
+    //generate codes
+    $rand_tmo = rand(100000, 999999); //rand number generator
+    $rand_sprint = rand(100000, 999999); //rand number generator
+    $rand1_ver = rand(100000, 999999); //rand number generator
+    $rand1_att = rand(100000, 999999); //rand number generator
+
+    $_SESSION["tmo_code"] = $rand_tmo;
+
+    //generate phone address
+    $phone_tmobile = $phone . "@tmomail.net";
+    $phone_att = $phone . "@txt.att.net";
+    $phone_verizon = $phone . "@vtext.com";
+    $phone_sprint = $phone . "@messaging.sprintpcs.com";
+    $phone_vmobile = $phone . "@vmobl.com";
+    $phone_tracphone = $phone . "@mmst5.tracfone.com";
+    $phone_metropcs = $phone . "@mymetropcs.com";
+    $phone_boost = $phone . "@myboostmobile.com";
+    $phone_cricket = $phone . "@mms.cricketwireless.net";
+    $phone_ptel = $phone . "@ptel.com";
+    $phone_republic = $phone . "@text.republicwireless.com";
+    $phone_google = $phone . "@msg.fi.google.com";
+    $phone_suncom = $phone . "@tms.suncom.com";
+    $phone_ting = $phone . "@message.ting.com";
+    $phone_uscellular = $phone . "@email.uscc.net";
+    $phone_cons_cell = $phone . "@cingularme.com";
+    $phone_cspire = $phone . "@cspire1.com";
+    $phone_pageplus = $phone . "@vtext.com";
+
+    //create subject
+    $sub = "Phone Verification";
+
+    //create message
+    $mes_tmo = "Your code is: " . $rand_tmo . " \nPlease enter this to continue signup.";
+
+
+    //create header
+    $header = "From: Frontdoor < system@frontdoor.design > \n";
+
+    //send T-Mobile text
+    echo $mes_tmo;
+
+    if(mail($phone_tmobile, $sub, $mes_tmo, $header)){
+      echo "<br/> Message was sent";
+    } else {
+      echo "<br/> Message failed to send";
+    }
+
+  } //end if post phone
+
+  if(myisset($_POST["code"])){ //if code set
+      $code = $_POST["code"];
+      if($code == $_SESSION["tmo_code"]){
+        //code passed
+        $_SESSION["conf_phone"] = $phone_tmobile;
+        header("location: ./signup-final.php");
+
+      } else {
+        //code failed
+        $error_incorrect = true;
+      }
+  }
  ?>
 
   <body style="background-color: #e6e6e6;">
@@ -19,7 +85,7 @@
   <div class="col-md-3"></div><!--off set-->
     <div class="col-md-6">
 
-      <div id="conf-p" class="panel panel-primary" style="min-height: 250px; width: 400px; margin-left: auto; margin-right: auto; margin-top: 300px;">
+      <div id="conf-code" class="panel panel-primary" style="min-height: 250px; width: 400px; margin-left: auto; margin-right: auto; margin-top: 300px;">
 
         <h3 class="panel-heading text-center" style="margin-top: 0px;">Sign Up</h3>
 
@@ -29,29 +95,21 @@
           <p><small>Taking a while? <a href="#">Resend</a></small></p>
           <hr/>
 
-          <form id="" method="post" action="signupscript.php" name="signup-frm" onsubmit="return validateForm()">
+          <form id="" method="post" action="signup-phone-validate.php" name="code-conf" onsubmit="return validateForm()">
             <div class="form-group">
 
-              <div id="fname-div" class="input-group">
+              <div id="code-div" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
-                <input type="text" id="fname" class="form-control" name="fname" placeholder="xxx-xxx-xxxx" value="<?php echo $_SESSION["return_fn"];?>">
-                  <span id="fname-x" class="glyphicon glyphicon-remove form-control-feedback" style="display: none;"></span>
+                <input type="text" id="code" class="form-control" name="code" placeholder="xxxxxx" value="<?php echo $_SESSION["return_fn"];?>">
+                  <span id="code-x" class="glyphicon glyphicon-remove form-control-feedback" style="display: none;"></span>
               </div>
 
               <br/>
 
               <!-- php triggered errors -->
               <?php
-                if($_SESSION["error_incorrect"] == true){
-                  echo "<div class='alert alert-danger'>Username or password is incorrect</div>";
-                }
-
-                if($_SESSION["error_missing"] == true){
-                  echo "<div class='alert alert-danger'>Please fill in all the fields</div>";
-                }
-
-                if($_SESSION["error_nouser"] == true){
-                  echo "<div class='alert alert-danger'>Username does not exist</div>";
+                if($error_incorrect == true){
+                  echo "<div class='alert alert-danger'>Code did not match, please try again</div>";
                 }
               ?>
 
@@ -65,9 +123,6 @@
                 Please fill in the fields
               </div>
 
-              <div id="alert-text-sent" class="alert alert-success" style="display: block">
-                Text sent
-              </div>
 
               <div class="text-center">
                 <div class="btn-group">

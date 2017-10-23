@@ -7,13 +7,39 @@
     $_SESSION["Alert_already_logged_in"] = true;
   }
 
-  //set page head
   $title = "Sign Up"; //set page title
   require("../includes/header_no_nav.php");
   require("../includes/functions.php");
 
- ?>
+  if(myisset($_POST["phone"])){
+    echo "Phone has been set <br />";
+    //generate codes
+    $rand_tmo = rand(100000, 999999); //rand number generator
+    $rand_sprint = rand(100000, 999999); //rand number generator
+    $rand1_ver = rand(100000, 999999); //rand number generator
+    $rand1_att = rand(100000, 999999); //rand number generator
 
+    //create subject
+    $sub = "Phone Verification";
+
+    //create message
+    $mes_tmo = "Your code is: " . $rand_tmo . " \nPlease enter this to continue signup.";
+
+    //create header
+    $header = "From: Frontdoor < system@frontdoor.design > \n";
+
+    //send T-Mobile text
+    echo $mes_tmo;
+
+    if(mail($_POST["phone"] . "@tmomail.net", $sub, $mes_tmo, $header)){
+      echo "<br/> Message was sent";
+    } else {
+      echo "<br/> Message failed to send";
+    }
+
+}
+
+ ?>
 
   <body style="background-color: #e6e6e6;">
 
@@ -21,7 +47,7 @@
   <div class="col-md-3"></div><!--off set-->
     <div class="col-md-6">
 
-      <div id="conf-p" class="panel panel-primary" style="min-height: 250px; width: 400px; margin-left: auto; margin-right: auto; margin-top: 300px; display: block;">
+      <div id="conf-p" class="panel panel-primary" style="min-height: 250px; width: 400px; margin-left: auto; margin-right: auto; margin-top: 300px;">
 
         <h3 class="panel-heading text-center" style="margin-top: 0px;">Sign Up</h3>
 
@@ -31,13 +57,13 @@
           <p><small>Learn more about <a href="#">Two Factor Authentication</a></small></p>
           <hr/>
 
-          <form id="" method="post" action="signup-phone-validate.php" name="phone" onsubmit="return validateForm()">
+          <form id="" method="post" action="signup-phone.php" name="signup-frm" onsubmit="return validateForm()">
             <div class="form-group">
 
               <div id="phone-div" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                 <input type="text" id="phone" class="form-control" name="phone" placeholder="xxx-xxx-xxxx" value="<?php echo $_SESSION["return_fn"];?>">
-                  <span id="phone-x" class="glyphicon glyphicon-remove form-control-feedback" style="display: none;"></span>
+                  <span id="fname-x" class="glyphicon glyphicon-remove form-control-feedback" style="display: none;"></span>
               </div>
 
               <br/>
@@ -74,7 +100,7 @@
               <div class="text-center">
                 <div class="btn-group">
                   <a class="btn btn-default" href="signup.php">Go Back</a> <!-- back to index.php -->
-                  <button type="submit" class="btn btn-primary">Send Code</button>
+                  <button type="submit" class="btn btn-primary">Sent Text</button>
                 </div><!--end btn group-->
                 <br/><br/>
                 <a href="#">Skip</a>
@@ -84,13 +110,11 @@
 
         </div><!-- end panel body-->
       </div><!--end panel-->
-
-
     <div><!--end col -->
   </div><!--end row -->
 
 
-  <script src="../js/signup-phone.js"></script>
+<script src="../js/signup-phone.js"></script>
 
   </body>
 </html>

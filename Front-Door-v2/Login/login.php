@@ -7,10 +7,10 @@
     $_SESSION["Alert_already_logged_in"] = true;
   }
 
+  
   $title = "Log In"; //set page title
   require("../includes/header_no_nav.php");
-  //require("includes/header_logged_out.php"); //load page header
-  //require("includes/header_logged_in.php"); //load page header
+
  ?>
 
   <body style="background-color: #e6e6e6;">

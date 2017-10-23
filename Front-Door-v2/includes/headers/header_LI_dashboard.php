@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title><?php echo $title;?></title>
+    <title><?php echo $_SESSION["User"];?></title>
 
       <!-- Custom stylesheets -->
       <link rel="stylesheet" href="css/main_v2.css">
@@ -23,15 +23,8 @@
   <body>
 
     <header>
-      <div class="jumbotron">
-        <div class="container">
-        <h1>Welcome to the Front Door</h1>
-        <p>Developed by <i>Benjamin Walker</i></p>
-      </div><!-- end container -->
-      </div><!-- end jumbotron -->
 
-
-      <nav class="nav navbar-inverse" data-spy="affix" data-offset-top="197">
+      <nav class="nav navbar-inverse" data-spy="affix" data-offset-top="0">
         <div class="container">
           <div class="container-fluid">
             <div class="navbar-header">

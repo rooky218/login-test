@@ -25,7 +25,7 @@
 
         <div class="panel-body">
 
-          <form id="" method="post" action="signupscript.php" name="signup-frm" onsubmit="return validateForm()">
+          <form id="" method="post" action="signup-phone.php" name="signup-frm" onsubmit="return validateForm()">
             <div class="form-group">
 
               <div id="fname-div" class="form-group">
